@@ -1,14 +1,18 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use valkey_module::alloc::ValkeyAlloc;
+use valkey_module::{RedisModuleCommandFilterCtx, VALKEYMODULE_CMDFILTER_NOSELF, valkey_module};
+
+fn sleep_filter_fn(_ctx: *mut RedisModuleCommandFilterCtx) {
+    std::thread::sleep(std::time::Duration::from_millis(1));
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+valkey_module! {
+    name: "patience",
+    version: 1,
+    allocator: (ValkeyAlloc, ValkeyAlloc),
+    data_types: [],
+    commands: [
+    ],
+    filters: [
+        [sleep_filter_fn, VALKEYMODULE_CMDFILTER_NOSELF],
+    ]
 }
