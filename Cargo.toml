@@ -4,8 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+linkme = "0.3.35"
 paste = "1.0.15"
 valkey-module = "0.1.10"
+valkey-module-macros = "0.1.10"
+lazy_static = "1.5.0"
 
 [features]
 enable-system-alloc = ["valkey-module/enable-system-alloc"]
